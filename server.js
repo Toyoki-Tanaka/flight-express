@@ -41,6 +41,21 @@ app.get('/flight/new', (req, res) => {
     res.render('New')
 })
 
+// Update
+
+app.put('/flight/:id', async (req, res) => {
+    try {
+        const updatedFlight = await Flight.findByIdAndUpdate(
+            req.params.id, req.body, { new: true })
+        console.log(updatedFlight)
+        res.redirect(`/flight`)
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
+
+
 // Create Route
 
 app.post('/flight', async (req, res) => {
@@ -52,6 +67,20 @@ app.post('/flight', async (req, res) => {
         res.status(400).send(err)
     }
 })
+
+// Edit Route
+
+app.get('/flight/:id/edit', async (req, res) => {
+    try {
+        const foundFlight = await Flight.findById(req.params.id)
+        res.render('Edit', {
+            flight: foundFlight
+        })
+    } catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 
 // Show Route
 app.get('/flight/:id', async (req, res) => {

@@ -15,6 +15,14 @@ class New extends React.Component {
                     Airline: <input type="text" name="airline" /><br />
                     Flight Number: <input type="number" name="flightNo" min={10} max={9999} /> <br />
                     Depart Date: <input type="datetime-locale" name="departs" defaultValue={defaultValue} /> <br />
+                    Airport: <select name="airport">
+                        <option value="AUS">AUS</option>
+                        <option value="DAL">DAL</option>
+                        <option value="LAX">LAX</option>
+                        <option value="SAN">SAN</option>
+                        <option value="SEA">SEA</option>
+
+                    </select>
                     <input type="submit" value="Create Flight" />
                 </form>
             </div>);

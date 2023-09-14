@@ -16,6 +16,7 @@ class Index extends React.Component {
                                     <p>Airline:{flgt.airline}</p>
                                     <p>Flight #:{flgt.flightNo}</p>
                                     <p>Departure: {flgt.departs.toString()}</p>
+                                    <a href={`/flight/${flgt._id}`}>Details</a>
                                 </li>
                             )
                         })
