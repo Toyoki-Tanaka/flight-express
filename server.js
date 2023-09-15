@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const Flight = require('./models/flight')
+// const Destination = require('./models/destination')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -22,6 +24,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride("_method"))
 
 
 // Index
@@ -43,16 +46,31 @@ app.get('/flight/new', (req, res) => {
 
 // Update
 
-app.put('/flight/:id', async (req, res) => {
+app.put('/flight/:id/flights', async (req, res) => {
     try {
-        const updatedFlight = await Flight.findByIdAndUpdate(
-            req.params.id, req.body, { new: true })
-        console.log(updatedFlight)
-        res.redirect(`/flight`)
+        const destination = req.body
+        const foundFlight = await Flight.findById(req.params.id)
+        foundFlight.destinations.push(destination)
+        const updatedFlight = await Flight.findByIdAndUpdate(req.params.id, foundFlight, { new: true })
+        res.status(201).redirect('/flight');
     } catch (err) {
         res.status(400).send(err)
     }
 })
+
+// app.put('/flight/:id', async (req, res) => {
+//     try {
+//     
+//         const updated = await Flight.findByIdAndUpdate(
+//             req.params.id, req.body, { new: true })
+//         res.redirect(`/flight`)
+//     } catch (err) {
+//         res.status(400).send(err)
+//     }
+// })
+
+
+
 
 
 
@@ -68,18 +86,18 @@ app.post('/flight', async (req, res) => {
     }
 })
 
-// Edit Route
+// // Edit Route
 
-app.get('/flight/:id/edit', async (req, res) => {
-    try {
-        const foundFlight = await Flight.findById(req.params.id)
-        res.render('Edit', {
-            flight: foundFlight
-        })
-    } catch (err) {
-        res.status(400).send(err)
-    }
-})
+// app.get('/flight/:id/edit', async (req, res) => {
+//     try {
+//         const foundFlight = await Flight.findById(req.params.id)
+//         res.render('Edit', {
+//             flight: foundFlight
+//         })
+//     } catch (err) {
+//         res.status(400).send(err)
+//     }
+// })
 
 
 // Show Route

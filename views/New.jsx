@@ -12,7 +12,7 @@ class New extends React.Component {
             <div>
                 <h1>Create new flight</h1>
                 <form action="/flight" method="POST">
-                    Airline: <input type="text" name="airline" /><br />
+                    Airline: <input type="text" name="airline" placeholder='American Southwest United' /><br />
                     Flight Number: <input type="number" name="flightNo" min={10} max={9999} /> <br />
                     Depart Date: <input type="datetime-locale" name="departs" defaultValue={defaultValue} /> <br />
                     Airport: <select name="airport">
